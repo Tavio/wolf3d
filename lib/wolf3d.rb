@@ -1,7 +1,8 @@
 require "wolf3d/version"
 require "world"
-require "player"
 require "vector2d"
+require "player"
+require 'collision_ray'
 require 'rubygems' rescue nil
 require 'chingu'
 include Gosu
@@ -24,19 +25,22 @@ module Wolf3d
   
     def update
       super
-      for screenX in (0..SCREEN_WIDTH) do
-        cameraX = 2 * screenX / SCREEN_WIDTH.to_f - 1; # x-coordinate in camera space
-        rayPosX = @player.position.x;
-        rayPosY = @player.position.y;
-        rayDirX = @player.lookDirection.x + @camera_plane.x * cameraX;
-        rayDirY = @player.lookDirection.y + @camera_plane.y * cameraX;
-      end
+      rays = collision_rays(@player, @camera_plane, SCREEN_WIDTH)
     end
 
     private
 
     def configure_input
       self.input = { :escape => :exit } # exits example on Escape
+    end
+
+    def collision_rays(player, camera_plane, screen_width)
+      (0..SCREEN_WIDTH).map do |screenX|
+        cameraX = 2 * screenX / SCREEN_WIDTH.to_f - 1; # x-coordinate in camera space
+        CollisionRay.new(Vector2d.new(player.position.x, player.position.y),
+                         Vector2d.new(@player.lookDirection.x + @camera_plane.x * cameraX, 
+                                      @player.lookDirection.y + @camera_plane.y * cameraX)) 
+      end
     end
   end
 end
