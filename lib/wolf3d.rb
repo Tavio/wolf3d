@@ -25,7 +25,12 @@ module Wolf3d
   
     def update
       super
-      rays = collision_rays(@player, @camera_plane, SCREEN_WIDTH)
+      collision_rays(@player, @camera_plane, SCREEN_WIDTH).each do |ray|
+        #which box of the map we're in
+        mapX = ray.position.x.to_i
+        mapY = ray.position.y.to_i
+        wall_hit = false
+      end
     end
 
     private
