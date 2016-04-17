@@ -2,12 +2,21 @@ require "wolf3d/version"
 require "world"
 require "vector2d"
 require "player"
-require 'collision_ray'
+require 'search_ray'
+require 'dda'
 require 'rubygems' rescue nil
 require 'chingu'
 include Gosu
 
 module Wolf3d
+
+  class Ship < Chingu::GameObject  
+    def move_left;  @x -= 3; end
+    def move_right; @x += 3; end
+    def move_up;    @y -= 3; end
+    def move_down;  @y += 3; end
+  end
+
   class Game < Chingu::Window
 
     SCREEN_WIDTH = 640
@@ -21,15 +30,17 @@ module Wolf3d
       @camera_plane = Vector2d.new(0, 0.66)
       @curr_frame_time = 0
       @last_frame_time = 0
+      #@ship = Ship.create(:x => 200, :y => 200, :image => Image["spaceship.png"])
+      #@ship.input = { :holding_left => :move_left, :holding_right => :move_right, 
+      #                :holding_up => :move_up, :holding_down => :move_down }
     end
   
     def update
       super
-      collision_rays(@player, @camera_plane, SCREEN_WIDTH).each do |ray|
-        #which box of the map we're in
-        mapX = ray.position.x.to_i
-        mapY = ray.position.y.to_i
-        wall_hit = false
+      #self.caption = "#{@ship.x}, #{@ship.y}"
+      search_rays(@player, @camera_plane, SCREEN_WIDTH).each do |search_ray|
+        require 'byebug'; byebug
+        wallHit = Dda.search_wall(search_ray, World.map)
       end
     end
 
@@ -39,10 +50,11 @@ module Wolf3d
       self.input = { :escape => :exit } # exits example on Escape
     end
 
-    def collision_rays(player, camera_plane, screen_width)
+    #TODO: write explanation on how look direction is calculated
+    def search_rays(player, camera_plane, screen_width)
       (0..SCREEN_WIDTH).map do |screenX|
         cameraX = 2 * screenX / SCREEN_WIDTH.to_f - 1; # x-coordinate in camera space
-        CollisionRay.new(Vector2d.new(player.position.x, player.position.y),
+        SearchRay.new(Vector2d.new(player.position.x, player.position.y),
                          Vector2d.new(@player.lookDirection.x + @camera_plane.x * cameraX, 
                                       @player.lookDirection.y + @camera_plane.y * cameraX)) 
       end

@@ -6,5 +6,21 @@ module Wolf3d
       @x = x
       @y = y
     end
+
+    def to_i
+      Vector2d.new(x.to_i, y.to_i)
+    end
+
+    def +(other)
+      Vector2d.new(x + other.x, y + other.y) 
+    end
+
+    def -(other)
+      Vector2d.new(x - other.x, y - other.y)
+    end
+
+    def *(constant)
+      Vector2d.new(x * constant, y * constant)
+    end
   end
 end
