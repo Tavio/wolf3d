@@ -39,7 +39,6 @@ module Wolf3d
       super
       #self.caption = "#{@ship.x}, #{@ship.y}"
       search_rays(@player, @camera_plane, SCREEN_WIDTH).each do |search_ray|
-        require 'byebug'; byebug
         wallHit = Dda.search_wall(search_ray, World.map)
       end
     end
@@ -53,10 +52,8 @@ module Wolf3d
     #TODO: write explanation on how look direction is calculated
     def search_rays(player, camera_plane, screen_width)
       (0..SCREEN_WIDTH).map do |screenX|
-        cameraX = 2 * screenX / SCREEN_WIDTH.to_f - 1; # x-coordinate in camera space
-        SearchRay.new(Vector2d.new(player.position.x, player.position.y),
-                         Vector2d.new(@player.lookDirection.x + @camera_plane.x * cameraX, 
-                                      @player.lookDirection.y + @camera_plane.y * cameraX)) 
+        camera_x = 2 * screenX / SCREEN_WIDTH.to_f - 1; # x-coordinate in camera space
+        SearchRay.new(player, camera_plane, camera_x)
       end
     end
   end

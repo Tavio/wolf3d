@@ -14,7 +14,7 @@ module Wolf3d
           mapPos.y += search_ray.step.y
           sideHit = :vertical
         end
-        break if world_map[mapPos.x][mapPos.y] > 0
+        break if world_map[mapPos.x, mapPos.y] > 0
       end
       WallHit.new(mapPos, sideHit)
     end

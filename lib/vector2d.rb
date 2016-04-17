@@ -22,5 +22,9 @@ module Wolf3d
     def *(constant)
       Vector2d.new(x * constant, y * constant)
     end
+
+    def ==(other)
+      other.x == x && other.y == y
+    end
   end
 end
