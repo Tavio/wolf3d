@@ -47,7 +47,7 @@ module Wolf3d
     private
 
     def configure_input
-      self.input = { :escape => :exit } # exits example on Escape
+      self.input = { :escape => :exit } 
     end
 
     #TODO: write explanation on how look direction is calculated
