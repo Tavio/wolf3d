@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 gem 'chingu'
 gem 'byebug'
+gem 'mocha'

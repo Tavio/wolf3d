@@ -39,7 +39,7 @@ module Wolf3d
       super
       #self.caption = "#{@ship.x}, #{@ship.y}"
       search_rays(@player, @camera_plane, SCREEN_WIDTH).each do |search_ray|
-        wallHit = Dda.search_wall(search_ray, World.map)
+        wall_hit = Dda.search_wall(search_ray, World.map)
       end
     end
 

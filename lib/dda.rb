@@ -1,31 +1,31 @@
 module Wolf3d
   class Dda
     def self.search_wall(search_ray, world_map)
-      mapPos = search_ray.position.to_i
-      sideDist = search_ray.sideDist
-      sideHit = nil
+      map_pos = search_ray.position.to_i
+      side_dist = search_ray.side_dist
+      side_hit = nil
       loop do
-        if sideDist.x < sideDist.y 
-          sideDist.x += search_ray.deltaDist.x
-          mapPos.x += search_ray.step.x
-          sideHit = :horizontal
+        if side_dist.x < side_dist.y 
+          side_dist.x += search_ray.delta_dist.x
+          map_pos.x += search_ray.step.x
+          side_hit = :horizontal
         else
-          sideDist.y += search_ray.deltaDist.y
-          mapPos.y += search_ray.step.y
-          sideHit = :vertical
+          side_dist.y += search_ray.delta_dist.y
+          map_pos.y += search_ray.step.y
+          side_hit = :vertical
         end
-        break if world_map[mapPos.x, mapPos.y] > 0
+        break if world_map[map_pos.x, map_pos.y] > 0
       end
-      WallHit.new(mapPos, sideHit)
+      WallHit.new(map_pos, side_hit)
     end
   end
 
   class WallHit
-    attr_reader :mapPos, :sideHit
+    attr_reader :map_pos, :side_hit
     
-    def initialize (mapPos, sideHit)
-      @mapPos = mapPos
-      @sideHit = sideHit
+    def initialize (map_pos, side_hit)
+      @map_pos = map_pos
+      @side_hit = side_hit
     end
   end
 end

@@ -1,10 +1,10 @@
 module Wolf3d
   class Player
-    attr_accessor :position, :lookDirection
+    attr_accessor :position, :look_direction
 
-    def initialize(initialPosition, initialLookDirection)
-      @position = initialPosition
-      @lookDirection = initialLookDirection
+    def initialize(initial_position, initial_look_direction)
+      @position = initial_position
+      @look_direction = initial_look_direction
     end
   end
 end
