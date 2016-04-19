@@ -1,13 +1,14 @@
 module Wolf3d
   class SearchRay
-    attr_reader :position, :direction, :delta_dist, :side_dist, :step
+    attr_reader :position, :direction, :delta_dist, :side_dist, :step, :screen_x
 
-    def initialize(player, camera_plane, camera_x)
+    def initialize(player, camera_plane, camera_x, screen_x)
       @position = Vector2d.new(player.position.x, player.position.y)
       @direction = calculate_direction(player.look_direction, camera_plane, camera_x) 
       @delta_dist = calculate_delta_dist(@direction)
       @side_dist = calculate_side_dist(@position, @direction, @delta_dist)
       @step = calculate_step(@direction)
+      @screen_x = screen_x
     end
 
     private
