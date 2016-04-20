@@ -27,6 +27,18 @@ module Wolf3d
       other.x == x && other.y == y
     end
 
+    def dot(other)
+      x * other.x + y * other.y
+    end
+
+    def projection(other)
+      other * (self.dot(other) / other.dot(other))
+    end
+
+    def magnitude
+      Math.sqrt(x ** 2 + y ** 2)
+    end
+
     def distance(other)
       Math.sqrt((other.x - x) ** 2 + (other.y - y) ** 2)
     end

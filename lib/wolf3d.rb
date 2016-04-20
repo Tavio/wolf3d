@@ -55,7 +55,8 @@ module Wolf3d
       #self.caption = "#{@ship.x}, #{@ship.y}"
       search_rays(@player, @camera_plane, SCREEN_WIDTH).each do |search_ray|
         wall_hit = Dda.search_wall(search_ray, World.map)
-        wall_distance = @player.position.distance(wall_hit.map_pos)
+        #wall_distance = @player.position.distance(wall_hit.map_pos)
+        wall_distance = ((wall_hit.map_pos - search_ray.position).projection(@player.look_direction)).magnitude
         #Calculate height of line to draw on screen
         line_height = (SCREEN_HEIGHT / wall_distance).to_i
 
